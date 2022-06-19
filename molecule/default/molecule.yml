@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  ansible-lint .
+platforms:
+  - name: centos7
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+    groups:
+      - filebeat
+  - name: ubuntu
+    image: docker.io/pycontribs/ubuntu:latest
+    pre_build_image: true
+    groups:
+      - filebeat
+provisioner:
+  name: ansible
+  inventory:
+    hosts:
+      all:
+        hosts:
+          el-instance:
+            ansible_host: 130.193.53.100
+          kibana-instance:
+            ansible_host: 84.201.137.187
+verifier:
+  name: ansible

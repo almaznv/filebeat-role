@@ -1,0 +1,14 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: filebeat
+  gather_facts: false
+  tasks:
+    - name: Get filebeat log
+      shell: cat /var/log/filebeat/$(ls /var/log/filebeat | head -1)
+      register: filebeatlog
+    - name: Example assertion
+      assert:
+        that:
+          - "'Loading of config files completed' in filebeatlog.stdout"
